@@ -4,8 +4,7 @@ import { galleryItems } from './gallery-items.js';
 console.log(galleryItems);
 
 const imgConteiner = document.querySelector (".gallery");
-const imgMarkup = createPictureGallery(galleryItems);
-imgConteiner.insertAdjacentHTML ("beforeend", imgMarkup);
+
 
 function createPictureGallery (galleryItems) {
     return galleryItems.map ( ({preview, original, description})=> {
@@ -19,27 +18,22 @@ function createPictureGallery (galleryItems) {
           />
         </a>
       </div>`;
-    }).join ("")
+    })
+    .join ("")
 }
+
+const imgMarkup = createPictureGallery(galleryItems);
+imgConteiner.insertAdjacentHTML ("afterbegin", imgMarkup);
+
 imgConteiner.addEventListener("click", (eve) => {
-    eve.preventDefault();
+  
     if (eve.target.nodeName !=="IMG") {
         return;
-    }
-});
+    }  eve.preventDefault();
+
 const urlLargeImage = eve.target.dataset.source;
 
-const instance = basicLightbox.create(' <img src="${urlLargeImage}" width = "800" heigth = "600">'
+const instance = basicLightbox.create(`<img src="${urlLargeImage}" width = "800" heigth = "600">`
  );
-    instance.show();
-
-// window.addEventListener("keydown", e => {
-//   if (e.code === "Escape") {
-//     instance.close();
-//   }
-//   window.removeEventListener("keydown", e => {
-//     if (e.code === "Escape") {
-//       instance.close();
-//     }
-//   });
-// });
+instance.show();
+})
